@@ -42,8 +42,6 @@ public class GameSceneDirector : MonoBehaviour
         float aspect = (float)Screen.width / (float)Screen.height;
         WorldStart = new Vector2(TileMapStart.x - cameraSize * aspect, TileMapStart.y - cameraSize);
         WorldEnd = new Vector2(TileMapEnd.x + cameraSize * aspect, TileMapEnd.y + cameraSize);
-
-        
     }
 
     // Update is called once per frame

@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
 
     Rigidbody2D rigidbody2d;
     Animator animator;
-    float moveSpeed = 2;
+    float moveSpeed = 10;
 
     [SerializeField] GameSceneDirector sceneDirector;
     [SerializeField] Slider sliderHP;
@@ -26,6 +26,10 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         movePlayer();
+
+        moveCamera();
+
+        moveSliderHP();
     }
 
     void movePlayer()
@@ -63,59 +67,61 @@ public class PlayerController : MonoBehaviour
 
         animator.SetTrigger(trigger);
 
-        // if(rigidbody2d.position.x < sceneDirector.WorldStart.x)
-        // {
-        //     Vector2 pos = rigidbody2d.position;
-        //     pos.x = sceneDirector.WorldStart.x;
-        //     rigidbody2d.position = pos;
-        // }
-        // if(rigidbody2d.position.y < sceneDirector.WorldStart.y)
-        // {
-        //     Vector2 pos = rigidbody2d.position;
-        //     pos.y = sceneDirector.WorldStart.y;
-        //     rigidbody2d.position = pos;
-        // }
-        // if(sceneDirector.WorldEnd.x < rigidbody2d.position.x)
-        // {
-        //     Vector2 pos = rigidbody2d.position;
-        //     pos.x = sceneDirector.WorldStart.x;
-        //     rigidbody2d.position = pos;
-        // }
-        // if(sceneDirector.WorldEnd.y < rigidbody2d.position.y)
-        // {
-        //     Vector2 pos = rigidbody2d.position;
-        //     pos.y = sceneDirector.WorldStart.y;
-        //     rigidbody2d.position = pos;
-        // }
+        if(rigidbody2d.position.x < sceneDirector.WorldStart.x)
+        {
+            Vector2 pos = rigidbody2d.position;
+            pos.x = sceneDirector.WorldStart.x;
+            rigidbody2d.position = pos;
+        }
+        if(rigidbody2d.position.y < sceneDirector.WorldStart.y)
+        {
+            Vector2 pos = rigidbody2d.position;
+            pos.y = sceneDirector.WorldStart.y;
+            rigidbody2d.position = pos;
+        }
+        if(sceneDirector.WorldEnd.x < rigidbody2d.position.x)
+        {
+            Vector2 pos = rigidbody2d.position;
+            pos.x = sceneDirector.WorldEnd.x;
+            rigidbody2d.position = pos;
+        }
+        if(sceneDirector.WorldEnd.y < rigidbody2d.position.y)
+        {
+            Vector2 pos = rigidbody2d.position;
+            pos.y = sceneDirector.WorldEnd.y;
+            rigidbody2d.position = pos;
+        }
     }
-    // void moveCamera()
-    // {
-    //     Vector3 pos = Transform.position;
-    //     pos.z = Camera.main.transform.position.z;
+    void moveCamera()
+    {
+        Vector3 pos = transform.position;
+        pos.z = Camera.main.transform.position.z;
 
-    //     if(pos.x < sceneDirector.TileMapStart.x)
-    //     {
-    //         pos.x = sceneDirector.TileMapStart.x;
-    //     }
-    //     if(pos.y < sceneDirector.TileMapStart.y)
-    //     {
-    //         pos.y = sceneDirector.TileMapStart.y;
-    //     }
+        if(pos.x < sceneDirector.TileMapStart.x)
+        {
+            pos.x = sceneDirector.TileMapStart.x;
+        }
+        if(pos.y < sceneDirector.TileMapStart.y)
+        {
+            pos.y = sceneDirector.TileMapStart.y;
+        }
 
-    //     if(sceneDirector.TileMapEnd.x < pos.x)
-    //     {
-    //         pos.x = sceneDirector.TileMapEnd.x;
-    //     }
-    //     if(sceneDirector.TileMapEnd.y < pos.y)
-    //     {
-    //         pos.y = sceneDirector.TileMapEnd.y;
-    //     }
+        if(sceneDirector.TileMapEnd.x < pos.x)
+        {
+            pos.x = sceneDirector.TileMapEnd.x;
+        }
+        if(sceneDirector.TileMapEnd.y < pos.y)
+        {
+            pos.y = sceneDirector.TileMapEnd.y;
+        }
 
-    //     Camera.main.transform.position = pos;
-    // }
+        Camera.main.transform.position = pos;
+    }
 
-    // void moveSliderHP()
-    // {
-    //     Vector3 pos = RectTransformUtility.WorldToScreenPoint(Camera.main, transform.position);
-    // }
+    void moveSliderHP()
+    {
+        Vector3 pos = RectTransformUtility.WorldToScreenPoint(Camera.main, transform.position);
+        pos.y -= 50;
+        sliderHP.transform.position = pos;
+    }
 }
