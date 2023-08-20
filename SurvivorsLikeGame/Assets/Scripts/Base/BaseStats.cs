@@ -55,6 +55,8 @@ public class BaseStats
 
     public float MaxXP;
 
+    public float MoveSpeed;
+
     public float PickUpRange;
 
     public float AliveTime;
