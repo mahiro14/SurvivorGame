@@ -13,6 +13,14 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] GameSceneDirector sceneDirector;
     [SerializeField] Slider sliderHP;
+    [SerializeField] Slider sliderXP;
+    
+
+    public CharacterStats Stats;
+
+    float attackCoolDownTimer;
+    float attackCoolDownTimerMax = 0.5f;
+
 
     
     // Start is called before the first frame update
@@ -25,6 +33,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        updateTimer();
+
         movePlayer();
 
         moveCamera();
@@ -123,5 +133,69 @@ public class PlayerController : MonoBehaviour
         Vector3 pos = RectTransformUtility.WorldToScreenPoint(Camera.main, transform.position);
         pos.y -= 50;
         sliderHP.transform.position = pos;
+    }
+
+    public void Damage(float attack)
+    {
+        if (!enabled) return;
+
+        float damage = Mathf.Max(0, attack - Stats.Defense);
+        Stats.HP -= damage;
+
+        sceneDirector.DispDamage(gameObject, damage);
+
+        // TODO:gameOver
+        if(0>Stats.HP)
+        {
+
+        }
+
+        if(0 > Stats.HP) Stats.HP = 0;
+        setSliderHP();
+    }
+
+    void setSliderHP()
+    {
+        sliderHP.maxValue = Stats.MaxHP;
+        sliderHP.value = Stats.HP;
+    }
+
+    void setSliderXP()
+    {
+        sliderXP.maxValue = Stats.MaxXP;
+        sliderXP.value = Stats.XP;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        attackEnemy(collision);
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        attackEnemy(collision);
+    }
+
+    private void OnCollisionExit2D(Collision2D collition)
+    {
+
+    }
+
+    void attackEnemy(Collision2D collision)
+    {
+        if(!collision.gameObject.TryGetComponent<EnemyController>(out var enemy)) return;
+
+        if(0 < attackCoolDownTimer) return;
+
+        enemy.Damage(Stats.Attack);
+        attackCoolDownTimer = attackCoolDownTimerMax;
+    }
+
+    void updateTimer()
+    {
+        if(0 < attackCoolDownTimer)
+        {
+            attackCoolDownTimer -= Time.deltaTime;
+        }
     }
 }
