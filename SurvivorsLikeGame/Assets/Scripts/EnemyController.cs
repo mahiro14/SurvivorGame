@@ -115,13 +115,48 @@ public class EnemyController : MonoBehaviour
         state = State.Dead;
     }
 
-    private void OnCollisionEnter(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
+        attackPlayer(collision);
+    }
 
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        attackPlayer(collision);
     }
 
     private void OnCollisionExit2D(Collision2D collition)
     {
 
+    }
+
+    void attackPlayer(Collision2D collision)
+    {
+        if(!collision.gameObject.TryGetComponent<PlayerController>(out var player)) return;
+
+        if(0 < attackCoolDownTimer) return;
+
+        if(State.Alive != state) return;
+
+        player.Damage(Stats.Attack);
+        attackCoolDownTimer = attackCoolDownTimerMax;
+    }
+
+    public float Damage(float attack)
+    {
+        if(State.Alive != state) return 0;
+
+        float damage = Mathf.Max(0, attack - Stats.Defense);
+        Stats.HP -= damage;
+
+        sceneDirector.DispDamage(gameObject, damage);
+
+        // TODO 消滅
+        if (0>Stats.HP)
+        {
+            setDead();
+        }
+
+        return damage;
     }
 }
