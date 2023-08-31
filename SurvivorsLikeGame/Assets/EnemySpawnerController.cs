@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
 
 public enum SpawnType
@@ -64,7 +66,7 @@ public class EnemySpawnerController : MonoBehaviour
         this.sceneDirector = sceneDirector;
         this.tilemapCollider = tilemapCollider;
 
-        Enemies = new List<EnemySpawnerController>();
+        enemies = new List<EnemyController>();
         spawnDataIndex = -1;
     }
 
@@ -112,15 +114,15 @@ public class EnemySpawnerController : MonoBehaviour
         int rnd = Random.Range(0, enemySpawnData.EnemyIds.Count);
         int id = enemySpawnData.EnemyIds[rnd];
 
-        EnemySpawnerController enemy = CharacterSettings.Instance.CreateEnemy(id, sceneDirector, pos);
-        Enemies.Add(enemy);
+        EnemyController enemy = CharacterSettings.Instance.CreateEnemy(id, sceneDirector, pos);
+        enemies.Add(enemy);
     }
 
     void spawnGroup()
     {
         Vector3 center = sceneDirector.Player.transform.position;
 
-        float angle = 360/enemySpawnData.SpawnCountMax * i;
+        float angle = Random.Range(0, 360);
 
         float x = Mathf.Cos(angle * Mathf.Deg2Rad) * SpawnRadius;
         float y = Mathf.Sin(angle * Mathf.Deg2Rad) * SpawnRadius;
@@ -130,10 +132,10 @@ public class EnemySpawnerController : MonoBehaviour
 
         for(int i=0 ; i<enemySpawnData.SpawnCountMax ; i++)
         {
-            angle = Random.Range(0, 360);
+            angle = 360 / enemySpawnData.SpawnCountMax * i;
 
-            x = Mathf.Cos(angle * Mathf.Deg2Rad) * SpawnRadius;
-            y = Mathf.Sin(angle * Mathf.Deg2Rad) * SpawnRadius;
+            x = Mathf.Cos(angle * Mathf.Deg2Rad) * radius;
+            y = Mathf.Sin(angle * Mathf.Deg2Rad) * radius;
 
             Vector2 pos = center + new Vector3(x,y,0);
 
@@ -165,7 +167,7 @@ public class EnemySpawnerController : MonoBehaviour
         }
     }
 
-    public List<EnemySpawnerController> GetEnemies()
+    public List<EnemyController> GetEnemies()
     {
         enemies.RemoveAll(item => !item);
         return enemies;

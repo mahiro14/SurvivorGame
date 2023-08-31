@@ -29,7 +29,7 @@ public class GameSceneDirector : MonoBehaviour
     void Start()
     {
         OldSeconds = -1;
-        enemySpawner.Init(this.tilemapCollider);
+        enemySpawner.Init(this, tilemapCollider);
 
         foreach (Transform item in grid.GetComponentsInChildren<Transform>())
         {
