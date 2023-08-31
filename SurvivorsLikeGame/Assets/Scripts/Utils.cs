@@ -10,4 +10,16 @@ public static class Utils
         int minutes = (int)timer / 60;
         return minutes.ToString() + ":" + seconds.ToString("00");
     }
+
+    public static bool IsCollisionTile(Tilemap tilemapCollision, Vector2 position)
+    {
+        Vector3Int cellPosition = tilemapCollision.WorldToCell(position);
+
+        if (tilemapCollision.GetTile(cellPosition))
+        {
+            return true;
+        }
+
+        return false;
+    }
 }

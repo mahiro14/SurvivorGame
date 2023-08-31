@@ -26,6 +26,18 @@ public class CharacterSettings : ScriptableObject
     {
         return (CharacterStats)datas.Find(item => item.Id == id).GetCopy();
     }
+
+    public EnemyController CreateEnemy(int id, GameSceneDirector sceneDirector, Vector3 position)
+    {
+        CharacterStats stats = Instance.Get(id);
+
+        GameObject obj = Instantiate(stats.Prefab, position, Quaternion.identity);
+
+        EnemyController ctrl = obj.GetComponent<EnemyController>();
+        ctrl.Init(sceneDirector, stats);
+
+        return ctrl;
+    }
 }
 
 public enum MoveType
