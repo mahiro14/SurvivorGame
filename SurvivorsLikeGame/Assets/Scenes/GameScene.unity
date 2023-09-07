@@ -20844,10 +20844,10 @@ MonoBehaviour:
   Player: {fileID: 938020943}
   parentTextDamage: {fileID: 738649359}
   prefabTextDamage: {fileID: 1675051401025674942, guid: 3caeb41e94b2e2849a9745e05b51f326, type: 3}
-  textTimer: {fileID: 0}
+  textTimer: {fileID: 242010514}
   GameTimer: 0
   OldSeconds: 0
-  enemySpawner: {fileID: 0}
+  enemySpawner: {fileID: 2062506337}
 --- !u!4 &1847509050
 Transform:
   m_ObjectHideFlags: 0
@@ -23595,6 +23595,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2044930635}
   m_CullTransparentMesh: 1
+--- !u!1 &2062506336
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2062506338}
+  - component: {fileID: 2062506337}
+  m_Layer: 0
+  m_Name: EnemySpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2062506337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2062506336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35a5edb4ced6a4a4f99520fc27132cef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemySpawnDatas: []
+--- !u!4 &2062506338
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2062506336}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2138321243
 GameObject:
   m_ObjectHideFlags: 0
@@ -23729,3 +23774,4 @@ SceneRoots:
   - {fileID: 1683821168}
   - {fileID: 2032086650}
   - {fileID: 1847509050}
+  - {fileID: 2062506338}
